@@ -82,24 +82,26 @@ export default function Home() {
                             </div>
                         </div>
 
-                        {/* Theme Toggle */}
-                        <button
-                            onClick={toggleTheme}
-                            className="glass-strong p-3 rounded-xl hover-lift smooth-transition text-foreground"
-                            aria-label="Toggle theme"
-                        >
-                            {theme === 'dark' ? <Sun size={24} /> : <Moon size={24} />}
-                        </button>
+                        <div className="flex items-center gap-4">
+                            {/* Theme Toggle */}
+                            <button
+                                onClick={toggleTheme}
+                                className="glass-strong p-3 rounded-xl hover-lift smooth-transition text-foreground"
+                                aria-label="Toggle theme"
+                            >
+                                {theme === 'dark' ? <Sun size={24} /> : <Moon size={24} />}
+                            </button>
 
-                        {/* Temperature Unit Toggle */}
-                        <button
-                            onClick={toggleUnit}
-                            className="glass-strong px-6 py-3 rounded-xl hover-lift smooth-transition flex items-center gap-2 
-                       text-foreground font-semibold w-fit"
-                            aria-label={`Switch to ${unit === 'C' ? 'Fahrenheit' : 'Celsius'}`}
-                        >
-                            <span className="text-xl">°{unit === 'C' ? 'C' : 'F'}</span>
-                        </button>
+                            {/* Temperature Unit Toggle */}
+                            <button
+                                onClick={toggleUnit}
+                                className="glass-strong px-6 py-3 rounded-xl hover-lift smooth-transition flex items-center gap-2 
+                           text-foreground font-semibold w-fit"
+                                aria-label={`Switch to ${unit === 'C' ? 'Fahrenheit' : 'Celsius'}`}
+                            >
+                                <span className="text-xl">°{unit === 'C' ? 'C' : 'F'}</span>
+                            </button>
+                        </div>
                     </div>
 
                     {/* Search Bar */}
@@ -126,7 +128,7 @@ export default function Home() {
                 )}
 
                 {/* Footer */}
-                <footer className="mt-12 text-center text-white/50 text-sm fade-in">
+                <footer className="mt-12 text-center text-foreground-secondary text-sm fade-in">
                     <p>
                         Powered by{' '}
                         <a

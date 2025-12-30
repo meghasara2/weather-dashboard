@@ -21,7 +21,7 @@ export default function WeatherCard({ weather, unit }: WeatherCardProps) {
     }[weatherCategory] || 'bg-gradient-clear';
 
     return (
-        <div className={`rounded-3xl p-8 md:p-10 ${backgroundClass} glass-strong hover-lift smooth-transition fade-in`}>
+        <div className={`rounded-3xl p-8 md:p-10 ${backgroundClass} bg-opacity-90 backdrop-blur-xl border border-white/20 shadow-2xl hover-lift smooth-transition fade-in`}>
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 {/* Location and Date */}
                 <div className="flex-1">
@@ -69,7 +69,7 @@ export default function WeatherCard({ weather, unit }: WeatherCardProps) {
             {/* Weather Details Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
                 {/* Feels Like */}
-                <div className="glass rounded-2xl p-4 smooth-transition hover:bg-white/10">
+                <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 smooth-transition hover:bg-white/20">
                     <div className="flex items-center gap-2 mb-2">
                         <Thermometer size={18} className="text-white/70" />
                         <p className="text-white/70 text-sm font-medium">Feels Like</p>
@@ -80,7 +80,7 @@ export default function WeatherCard({ weather, unit }: WeatherCardProps) {
                 </div>
 
                 {/* Humidity */}
-                <div className="glass rounded-2xl p-4 smooth-transition hover:bg-white/10">
+                <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 smooth-transition hover:bg-white/20">
                     <div className="flex items-center gap-2 mb-2">
                         <Droplets size={18} className="text-white/70" />
                         <p className="text-white/70 text-sm font-medium">Humidity</p>
@@ -89,7 +89,7 @@ export default function WeatherCard({ weather, unit }: WeatherCardProps) {
                 </div>
 
                 {/* Wind Speed */}
-                <div className="glass rounded-2xl p-4 smooth-transition hover:bg-white/10">
+                <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 smooth-transition hover:bg-white/20">
                     <div className="flex items-center gap-2 mb-2">
                         <Wind size={18} className="text-white/70" />
                         <p className="text-white/70 text-sm font-medium">Wind Speed</p>
@@ -100,7 +100,7 @@ export default function WeatherCard({ weather, unit }: WeatherCardProps) {
                 </div>
 
                 {/* Pressure */}
-                <div className="glass rounded-2xl p-4 smooth-transition hover:bg-white/10">
+                <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 smooth-transition hover:bg-white/20">
                     <div className="flex items-center gap-2 mb-2">
                         <Cloud size={18} className="text-white/70" />
                         <p className="text-white/70 text-sm font-medium">Pressure</p>
