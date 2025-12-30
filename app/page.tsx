@@ -1,5 +1,3 @@
-'use client';
-
 import { useState, useEffect } from 'react';
 // import SearchBar from '@/components/SearchBar';
 import LocationSelector from '@/components/LocationSelector';
@@ -7,6 +5,7 @@ import WeatherCard from '@/components/WeatherCard';
 import HourlyForecast from '@/components/HourlyForecast';
 import Forecast from '@/components/Forecast';
 import LoadingSkeleton from '@/components/LoadingSkeleton';
+import SplashScreen from '@/components/SplashScreen';
 import { getCurrentWeather, getForecast, WeatherData, ForecastData } from '@/utils/weatherApi';
 import { Cloud, Sun, Moon } from 'lucide-react';
 
@@ -19,6 +18,7 @@ export default function Home() {
     const [error, setError] = useState<string | null>(null);
     const [unit, setUnit] = useState<'C' | 'F'>('C');
     const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+    const [showSplash, setShowSplash] = useState(true);
 
     useEffect(() => {
         document.documentElement.className = theme;
@@ -60,93 +60,98 @@ export default function Home() {
         setUnit((prev) => (prev === 'C' ? 'F' : 'C'));
     };
 
-    if (loading) {
-        return <LoadingSkeleton />;
-    }
+    // Before main content, check splash
+    // We allow the main content to render (hidden or under) so it can fetch
 
     return (
         <main className="min-h-screen p-4 md:p-8 pb-20">
-            <div className="max-w-6xl mx-auto">
-                {/* Header */}
-                <header className="mb-8 md:mb-12 fade-in">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
-                        <div className="flex items-center gap-3">
-                            <div className="p-3 rounded-2xl glass-strong text-foreground">
-                                <Cloud size={32} />
-                            </div>
-                            <div>
-                                <h1 className="text-3xl md:text-4xl font-bold text-foreground">
-                                    Weather Dashboard
-                                </h1>
-                                <p className="text-foreground-secondary text-sm md:text-base">
-                                    Real-time weather information worldwide
-                                </p>
-                            </div>
-                        </div>
+            {showSplash && <SplashScreen onFinish={() => setShowSplash(false)} />}
 
-                        <div className="flex items-center gap-4">
-                            {/* Theme Toggle */}
-                            <button
-                                onClick={toggleTheme}
-                                className="glass-strong p-3 rounded-xl hover-lift smooth-transition text-foreground"
-                                aria-label="Toggle theme"
-                            >
-                                {theme === 'dark' ? <Sun size={24} /> : <Moon size={24} />}
-                            </button>
+            {(loading && !showSplash) ? (
+                <LoadingSkeleton /> // Only show skeleton if splash is gone and still loading
+            ) : (
+                <div className={`max-w-6xl mx-auto transition-opacity duration-1000 ${showSplash ? 'opacity-0' : 'opacity-100'}`}>
+                    {/* Header */}
+                    <header className="mb-8 md:mb-12 fade-in">
+                        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+                            <div className="flex items-center gap-3">
+                                <div className="p-3 rounded-2xl glass-strong text-foreground">
+                                    <Cloud size={32} />
+                                </div>
+                                <div>
+                                    <h1 className="text-3xl md:text-4xl font-bold text-foreground">
+                                        Weather Dashboard
+                                    </h1>
+                                    <p className="text-foreground-secondary text-sm md:text-base">
+                                        Real-time weather information worldwide
+                                    </p>
+                                </div>
+                            </div>
 
-                            {/* Temperature Unit Toggle */}
-                            <button
-                                onClick={toggleUnit}
-                                className="glass-strong px-6 py-3 rounded-xl hover-lift smooth-transition flex items-center gap-2 
+                            <div className="flex items-center gap-4">
+                                {/* Theme Toggle */}
+                                <button
+                                    onClick={toggleTheme}
+                                    className="glass-strong p-3 rounded-xl hover-lift smooth-transition text-foreground"
+                                    aria-label="Toggle theme"
+                                >
+                                    {theme === 'dark' ? <Sun size={24} /> : <Moon size={24} />}
+                                </button>
+
+                                {/* Temperature Unit Toggle */}
+                                <button
+                                    onClick={toggleUnit}
+                                    className="glass-strong px-6 py-3 rounded-xl hover-lift smooth-transition flex items-center gap-2 
                            text-foreground font-semibold w-fit"
-                                aria-label={`Switch to ${unit === 'C' ? 'Fahrenheit' : 'Celsius'}`}
-                            >
-                                <span className="text-xl">°{unit === 'C' ? 'C' : 'F'}</span>
-                            </button>
+                                    aria-label={`Switch to ${unit === 'C' ? 'Fahrenheit' : 'Celsius'}`}
+                                >
+                                    <span className="text-xl">°{unit === 'C' ? 'C' : 'F'}</span>
+                                </button>
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Search / Location Selection */}
-                    <LocationSelector onCitySelect={handleCitySelect} />
-                </header>
+                        {/* Search / Location Selection */}
+                        <LocationSelector onCitySelect={handleCitySelect} />
+                    </header>
 
-                {/* Error State */}
-                {error && (
-                    <div className="mb-6 p-6 rounded-2xl glass-strong border-2 border-red-500/50 fade-in">
-                        <p className="text-red-300 text-center font-medium">{error}</p>
-                        <p className="text-white/70 text-center text-sm mt-2">
-                            Please check the city name and try again, or ensure your API key is configured correctly.
+                    {/* Error State */}
+                    {error && (
+                        <div className="mb-6 p-6 rounded-2xl glass-strong border-2 border-red-500/50 fade-in">
+                            <p className="text-red-300 text-center font-medium">{error}</p>
+                            <p className="text-white/70 text-center text-sm mt-2">
+                                Please check the city name and try again, or ensure your API key is configured correctly.
+                            </p>
+                        </div>
+                    )}
+
+                    {/* Weather Content */}
+                    {!error && weather && forecast && (
+                        <div className="space-y-6">
+                            <WeatherCard weather={weather} unit={unit} />
+                            <HourlyForecast forecast={forecast} unit={unit} />
+                            <Forecast forecast={forecast} unit={unit} />
+                        </div>
+                    )}
+
+                    {/* Footer */}
+                    <footer className="mt-12 text-center text-foreground-secondary text-sm fade-in">
+                        <p>
+                            Powered by{' '}
+                            <a
+                                href="https://openweathermap.org/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-foreground-secondary hover:text-foreground smooth-transition underline"
+                            >
+                                OpenWeatherMap API
+                            </a>
                         </p>
-                    </div>
-                )}
-
-                {/* Weather Content */}
-                {!error && weather && forecast && (
-                    <div className="space-y-6">
-                        <WeatherCard weather={weather} unit={unit} />
-                        <HourlyForecast forecast={forecast} unit={unit} />
-                        <Forecast forecast={forecast} unit={unit} />
-                    </div>
-                )}
-
-                {/* Footer */}
-                <footer className="mt-12 text-center text-foreground-secondary text-sm fade-in">
-                    <p>
-                        Powered by{' '}
-                        <a
-                            href="https://openweathermap.org/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-foreground-secondary hover:text-foreground smooth-transition underline"
-                        >
-                            OpenWeatherMap API
-                        </a>
-                    </p>
-                    <p className="mt-2 text-foreground-secondary">
-                        Built with Next.js, Tailwind CSS, and Lucide Icons
-                    </p>
-                </footer>
-            </div>
+                        <p className="mt-2 text-foreground-secondary">
+                            Built with Next.js, Tailwind CSS, and Lucide Icons
+                        </p>
+                    </footer>
+                </div>
+            )}
         </main>
     );
 }
