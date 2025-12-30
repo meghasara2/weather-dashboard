@@ -40,7 +40,7 @@ A modern, responsive weather dashboard built with Next.js 14, Tailwind CSS, and 
    
    Create a `.env.local` file in the root directory:
    ```env
-   NEXT_PUBLIC_WEATHER_API_KEY=your_openweathermap_api_key_here
+   OPENWEATHER_API_KEY=your_openweathermap_api_key_here
    ```
 
    > ⚠️ **Important**: Never commit your `.env.local` file. It's already in `.gitignore`.
@@ -102,7 +102,7 @@ git push -u origin main
 2. Click "New Project"
 3. Import your GitHub repository
 4. **Configure Environment Variables**:
-   - Add `NEXT_PUBLIC_WEATHER_API_KEY` with your OpenWeatherMap API key
+   - Add `OPENWEATHER_API_KEY` with your OpenWeatherMap API key
 5. Click "Deploy"
 
 Your app will be live in under a minute! 🎉
@@ -113,7 +113,7 @@ In your Vercel project settings:
 
 1. Go to **Settings** → **Environment Variables**
 2. Add:
-   - **Name**: `NEXT_PUBLIC_WEATHER_API_KEY`
+   - **Name**: `OPENWEATHER_API_KEY`
    - **Value**: Your OpenWeatherMap API key
    - **Environments**: Production, Preview, Development (select all)
 
@@ -196,7 +196,7 @@ export function getWeatherCategory(weatherId: number, icon: string): string {
 
 Make sure you've:
 1. Created `.env.local` file
-2. Added `NEXT_PUBLIC_WEATHER_API_KEY=your_key`
+2. Added `OPENWEATHER_API_KEY=your_key`
 3. Restarted the development server
 
 ### City not found
