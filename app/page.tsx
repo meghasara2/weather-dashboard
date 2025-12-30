@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import SearchBar from '@/components/SearchBar';
+// import SearchBar from '@/components/SearchBar';
+import LocationSelector from '@/components/LocationSelector';
 import WeatherCard from '@/components/WeatherCard';
 import HourlyForecast from '@/components/HourlyForecast';
 import Forecast from '@/components/Forecast';
@@ -10,6 +11,7 @@ import { getCurrentWeather, getForecast, WeatherData, ForecastData } from '@/uti
 import { Cloud, Sun, Moon } from 'lucide-react';
 
 export default function Home() {
+    // Default to empty initial state or 'London'
     const [city, setCity] = useState('London');
     const [weather, setWeather] = useState<WeatherData | null>(null);
     const [forecast, setForecast] = useState<ForecastData | null>(null);
@@ -104,8 +106,8 @@ export default function Home() {
                         </div>
                     </div>
 
-                    {/* Search Bar */}
-                    <SearchBar onCitySelect={handleCitySelect} defaultCity={city} />
+                    {/* Search / Location Selection */}
+                    <LocationSelector onCitySelect={handleCitySelect} />
                 </header>
 
                 {/* Error State */}

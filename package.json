@@ -9,10 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "country-state-city": "^3.2.1",
+    "lucide-react": "^0.294.0",
     "next": "^14.0.4",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "lucide-react": "^0.294.0"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/node": "^20.10.5",
