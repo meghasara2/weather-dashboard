@@ -69,8 +69,8 @@ export default function Home() {
                 <header className="mb-8 md:mb-12 fade-in">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
                         <div className="flex items-center gap-3">
-                            <div className="p-3 rounded-2xl bg-gradient-clear glass">
-                                <Cloud size={32} className="text-white" />
+                            <div className="p-3 rounded-2xl glass-strong text-foreground">
+                                <Cloud size={32} />
                             </div>
                             <div>
                                 <h1 className="text-3xl md:text-4xl font-bold text-foreground">
