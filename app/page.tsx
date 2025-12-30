@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 // import SearchBar from '@/components/SearchBar';
 import LocationSelector from '@/components/LocationSelector';
