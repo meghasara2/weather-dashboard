@@ -1,8 +1,6 @@
 // Weather API utility functions for OpenWeatherMap integration
 
-const API_KEY = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
-const BASE_URL = 'https://api.openweathermap.org/data/2.5';
-const GEO_URL = 'https://api.openweathermap.org/geo/1.0';
+const INTERNAL_API_URL = '/api/weather';
 
 export interface WeatherData {
     name: string;
@@ -63,15 +61,11 @@ export interface CitySearchResult {
 }
 
 /**
- * Fetch current weather data for a given city
+ * Fetch current weather data via internal API
  */
 export async function getCurrentWeather(city: string): Promise<WeatherData> {
-    if (!API_KEY) {
-        throw new Error('API key is not configured. Please add NEXT_PUBLIC_WEATHER_API_KEY to your .env.local file');
-    }
-
     const response = await fetch(
-        `${BASE_URL}/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`
+        `${INTERNAL_API_URL}?endpoint=weather&q=${encodeURIComponent(city)}`
     );
 
     if (!response.ok) {
@@ -83,15 +77,11 @@ export async function getCurrentWeather(city: string): Promise<WeatherData> {
 }
 
 /**
- * Fetch 5-day weather forecast for a given city
+ * Fetch 5-day weather forecast via internal API
  */
 export async function getForecast(city: string): Promise<ForecastData> {
-    if (!API_KEY) {
-        throw new Error('API key is not configured. Please add NEXT_PUBLIC_WEATHER_API_KEY to your .env.local file');
-    }
-
     const response = await fetch(
-        `${BASE_URL}/forecast?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`
+        `${INTERNAL_API_URL}?endpoint=forecast&q=${encodeURIComponent(city)}`
     );
 
     if (!response.ok) {
@@ -103,15 +93,16 @@ export async function getForecast(city: string): Promise<ForecastData> {
 }
 
 /**
- * Search for cities by name (for autocomplete)
+ * Search for cities via internal API
+ * (Mainly legacy support, new components use country-state-city lib)
  */
 export async function searchCities(query: string): Promise<CitySearchResult[]> {
-    if (!API_KEY || query.length < 2) {
+    if (query.length < 2) {
         return [];
     }
 
     const response = await fetch(
-        `${GEO_URL}/direct?q=${encodeURIComponent(query)}&limit=5&appid=${API_KEY}`
+        `${INTERNAL_API_URL}?endpoint=geo&q=${encodeURIComponent(query)}`
     );
 
     if (!response.ok) {
